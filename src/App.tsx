@@ -5,12 +5,12 @@ import Router from "./router";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Provider store={store}>
         <Router />
         <ToastContainer autoClose={500} />
       </Provider>
-    </>
+    </div>
   );
 }
 
