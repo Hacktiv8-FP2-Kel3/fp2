@@ -2,15 +2,13 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { store } from "./redux/store";
 import Router from "./router";
-
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
-        <Router />
-        <ToastContainer autoClose={500} />
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <ToastContainer autoClose={500} />
+      <Router />
+    </Provider>
   );
 }
 

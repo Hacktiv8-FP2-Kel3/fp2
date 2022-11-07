@@ -5,17 +5,34 @@ import { css, styled } from "../styles/style";
 import Text from "../components/elements/text";
 import TextInput from "../components/elements/text-input";
 import Button from "../components/elements/button";
+import { ListReducers, useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
+import { loginAPI } from "../redux/reducers/loginSlice";
+import { toast } from "react-toastify";
 
 export const LOGIN_PAGE_ROUTE = "/login";
 
 export default function LoginPage() {
-  const [email, setEmail] = React.useState<string>("");
+  const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const loginState = useSelector((state: ListReducers) => state.login);
+  const dispatch = useAppDispatch();
   const [isShowPassword, setShowPassword] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const handlePasswordToggle = React.useCallback(() => {
     setShowPassword((prev) => !prev);
   }, []);
+
+  const handleSubmit = React.useCallback(() => {
+    dispatch(loginAPI({ username, password }));
+  }, [dispatch, password, username]);
+
+  React.useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate, loginState]);
+
   return (
     <Container>
       <Content>
@@ -24,8 +41,8 @@ export default function LoginPage() {
         <FormContainer>
           <TextInput
             label="Email"
-            value={email}
-            onChange={(val) => setEmail(val)}
+            value={username}
+            onChange={(val) => setUsername(val)}
           />
           <TextInput
             label="Password"
@@ -43,9 +60,10 @@ export default function LoginPage() {
           />
           <ButtonContainer>
             <Button
+              disabled={!username || !password}
               className={styles.button()}
-              // onClick={handleLogin}
-              // isLoading={isLoginLoading}
+              onClick={handleSubmit}
+              isLoading={loginState.isLoginPending}
             >
               Login
             </Button>
