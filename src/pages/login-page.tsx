@@ -7,7 +7,7 @@ import TextInput from "../components/elements/text-input";
 import Button from "../components/elements/button";
 import { ListReducers, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
-import { loginAPI } from "../redux/reducers/loginSlice";
+import { loginAPI } from "../redux/reducers/userSlice";
 import { toast } from "react-toastify";
 
 export const LOGIN_PAGE_ROUTE = "/login";
@@ -15,7 +15,7 @@ export const LOGIN_PAGE_ROUTE = "/login";
 export default function LoginPage() {
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const loginState = useSelector((state: ListReducers) => state.login);
+  const loginState = useSelector((state: ListReducers) => state.user);
   const dispatch = useAppDispatch();
   const [isShowPassword, setShowPassword] = React.useState<boolean>(false);
   const navigate = useNavigate();
@@ -23,15 +23,12 @@ export default function LoginPage() {
     setShowPassword((prev) => !prev);
   }, []);
 
-  const handleSubmit = React.useCallback(() => {
-    dispatch(loginAPI({ username, password }));
-  }, [dispatch, password, username]);
-
-  React.useEffect(() => {
-    if (localStorage.getItem("token")) {
+  const handleSubmit = React.useCallback(async () => {
+    try {
+      await dispatch(loginAPI({ username, password })).unwrap();
       navigate("/");
-    }
-  }, [navigate, loginState]);
+    } catch (rejectedValueOrSerializedError) {}
+  }, [dispatch, navigate, password, username]);
 
   return (
     <Container>

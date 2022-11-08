@@ -1,29 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
-export interface LoginState {
+export interface UserState {
   isLoginPending: boolean;
-  isLoginSuccess: boolean;
-  errorMessage: string;
 }
-interface LoginInput {
+interface UserInput {
   username: string;
   password: string;
 }
-const initialState: LoginState = {
+const initialState: UserState = {
   isLoginPending: false,
-  isLoginSuccess: false,
-  errorMessage: "",
 };
 
-const loginSlice = createSlice({
-  name: "login",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     logout: (state) => {
-      state.isLoginSuccess = initialState.isLoginSuccess;
       state.isLoginPending = initialState.isLoginPending;
-      state.errorMessage = initialState.errorMessage;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -32,36 +27,29 @@ const loginSlice = createSlice({
     });
     builder.addCase(loginAPI.fulfilled, (state, action) => {
       const data = action.payload;
-
-      if (data?.response?.status === 401) {
-        state.isLoginSuccess = false;
-        toast.error(data?.response?.data);
-      } else {
-        state.isLoginSuccess = true;
-        localStorage.setItem("token", data.token);
-        toast.success("Berhasil Login");
-      }
+      localStorage.setItem("token", data?.token);
       state.isLoginPending = false;
+
+      toast.success("Berhasil Login");
     });
     builder.addCase(loginAPI.rejected, (state, action) => {
       state.isLoginPending = false;
-      state.isLoginSuccess = false;
-      state.errorMessage = "Error";
     });
   },
 });
 
-export const loginAPI = createAsyncThunk("login", async (props: LoginInput) => {
+export const loginAPI = createAsyncThunk("login", async (props: UserInput) => {
   try {
     const res = await axios.post("https://fakestoreapi.com/auth/login", {
       username: props.username,
       password: props.password,
     });
+
     return res.data;
   } catch (e: any) {
-    console.log(e);
-    return e;
+    toast.error(e.response.data);
+    throw new Error(e.response.data);
   }
 });
 
-export default loginSlice.reducer;
+export default userSlice.reducer;

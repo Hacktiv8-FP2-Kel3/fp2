@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import logger from "redux-logger";
-import loginReducer, { LoginState } from "./reducers/loginSlice";
+import userReducer, { UserState } from "./reducers/userSlice";
 
 export interface ListReducers {
-  login: LoginState;
+  user: UserState;
 }
 
 export const store = configureStore({
   reducer: {
-    login: loginReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
