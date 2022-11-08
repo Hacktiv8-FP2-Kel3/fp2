@@ -8,15 +8,15 @@ import Button from "../components/elements/button";
 import { ListReducers, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import { loginAPI } from "../redux/reducers/userSlice";
-import { toast } from "react-toastify";
+import { useAuth } from "../api-hooks/user/use-auth";
 
 export const LOGIN_PAGE_ROUTE = "/login";
 
 export default function LoginPage() {
+  const { signIn } = useAuth();
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const loginState = useSelector((state: ListReducers) => state.user);
-  const dispatch = useAppDispatch();
+  const userState = useSelector((state: ListReducers) => state.user);
   const [isShowPassword, setShowPassword] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const handlePasswordToggle = React.useCallback(() => {
@@ -25,10 +25,10 @@ export default function LoginPage() {
 
   const handleSubmit = React.useCallback(async () => {
     try {
-      await dispatch(loginAPI({ username, password })).unwrap();
+      await signIn(username, password);
       navigate("/");
     } catch (rejectedValueOrSerializedError) {}
-  }, [dispatch, navigate, password, username]);
+  }, [navigate, password, signIn, username]);
 
   return (
     <Container>
@@ -60,7 +60,7 @@ export default function LoginPage() {
               disabled={!username || !password}
               className={styles.button()}
               onClick={handleSubmit}
-              isLoading={loginState.isLoginPending}
+              isLoading={userState.isLoginPending}
             >
               Login
             </Button>

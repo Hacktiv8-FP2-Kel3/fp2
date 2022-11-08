@@ -18,7 +18,7 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.isLoginPending = initialState.isLoginPending;
-      localStorage.removeItem("token");
+      toast.success("Berhasil Logout");
     },
   },
   extraReducers: (builder) => {
@@ -26,10 +26,7 @@ const userSlice = createSlice({
       state.isLoginPending = true;
     });
     builder.addCase(loginAPI.fulfilled, (state, action) => {
-      const data = action.payload;
-      localStorage.setItem("token", data?.token);
       state.isLoginPending = false;
-
       toast.success("Berhasil Login");
     });
     builder.addCase(loginAPI.rejected, (state, action) => {
@@ -51,5 +48,7 @@ export const loginAPI = createAsyncThunk("login", async (props: UserInput) => {
     throw new Error(e.response.data);
   }
 });
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

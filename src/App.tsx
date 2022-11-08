@@ -3,11 +3,14 @@ import { ToastContainer } from "react-toastify";
 import { store } from "./redux/store";
 import Router from "./router";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "./api-hooks/user/use-auth";
 function App() {
   return (
     <Provider store={store}>
-      <ToastContainer autoClose={500} />
-      <Router />
+      <AuthProvider>
+        <ToastContainer autoClose={500} />
+        <Router />
+      </AuthProvider>
     </Provider>
   );
 }
