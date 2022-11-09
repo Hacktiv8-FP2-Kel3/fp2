@@ -34,7 +34,7 @@ export default function LoginPage() {
     <Container>
       <Content>
         <Text className={styles.title()}>Login</Text>
-        <Text className={styles.desc()}>Aibo Commerce</Text>
+        <Text className={styles.desc()}>Bukapedia</Text>
         <FormContainer>
           <TextInput
             label="Email"
