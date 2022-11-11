@@ -47,6 +47,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             isAdmin: false,
           })
         );
+        setAuth({
+          token: res.token,
+          isAdmin: false,
+        });
       }
     },
     [dispatch]
