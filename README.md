@@ -1,4 +1,5 @@
 1. Run Yarn Before Start (required) // to install all dependencies and library
 2. Run Yarn Start (required) // to start app in localhost
-3. Email Credential : johnd
-4. Password Credential: m38rmF$
+3. Copy .env.example to .env
+4. Email Credential : johnd
+5. Password Credential: m38rmF$

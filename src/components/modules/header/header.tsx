@@ -29,13 +29,13 @@ function ItemComponent(props: Props) {
 export function Header() {
   const { headerLists } = useUserGetHeaderList();
   const navigate = useNavigate();
-  const auth = useAuth();
+  const { auth, signOut } = useAuth();
   const handleClickOnLogin = React.useCallback(() => {
     navigate("/login");
   }, [navigate]);
   const handleClickOnLogout = React.useCallback(() => {
-    auth.signOut();
-  }, [auth]);
+    signOut();
+  }, [signOut]);
 
   return (
     <div className={styles.navContainer()}>

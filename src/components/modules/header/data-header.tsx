@@ -1,9 +1,19 @@
-import { useSelector } from "react-redux";
-import { ListReducers, useAppDispatch } from "../../../redux/store";
-import { logout } from "../../../redux/reducers/userSlice";
+import { useAuth } from "../../../api-hooks/user/use-auth";
 
 export const useUserGetHeaderList = () => {
-  const dispatch = useAppDispatch();
+  const { auth } = useAuth();
+  const headerAdmin = [
+    {
+      name: "Rekap Penjualan",
+      link: "/rekap",
+    },
+  ];
+  const headerUser = [
+    {
+      name: "Cart",
+      link: "/cart",
+    },
+  ];
   const headerLists: {
     name: string;
     link: string;
@@ -13,14 +23,7 @@ export const useUserGetHeaderList = () => {
       name: "Home",
       link: "/",
     },
-    ...(localStorage.getItem("token")
-      ? [
-          {
-            name: "Cart",
-            link: "/cart",
-          },
-        ]
-      : []),
+    ...(auth?.token ? (auth?.isAdmin ? headerAdmin : headerUser) : []),
   ];
   return { headerLists };
 };
