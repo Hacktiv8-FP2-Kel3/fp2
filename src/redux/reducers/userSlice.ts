@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+import { combineReducers } from 'redux';
+import shoppingReducer from '../shopping/shopping-reducer';
+
 export interface UserState {
   isLoginPending: boolean;
 }
@@ -13,12 +17,12 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
       state.isLoginPending = initialState.isLoginPending;
-      toast.success("Berhasil Logout");
+      toast.success('Berhasil Logout');
     },
   },
   extraReducers: (builder) => {
@@ -27,7 +31,7 @@ const userSlice = createSlice({
     });
     builder.addCase(loginAPI.fulfilled, (state, action) => {
       state.isLoginPending = false;
-      toast.success("Berhasil Login");
+      toast.success('Berhasil Login');
     });
     builder.addCase(loginAPI.rejected, (state, action) => {
       state.isLoginPending = false;
@@ -35,9 +39,9 @@ const userSlice = createSlice({
   },
 });
 
-export const loginAPI = createAsyncThunk("login", async (props: UserInput) => {
+export const loginAPI = createAsyncThunk('login', async (props: UserInput) => {
   try {
-    const res = await axios.post("https://fakestoreapi.com/auth/login", {
+    const res = await axios.post('https://fakestoreapi.com/auth/login', {
       username: props.username,
       password: props.password,
     });
@@ -47,6 +51,10 @@ export const loginAPI = createAsyncThunk("login", async (props: UserInput) => {
     toast.error(e.response.data);
     throw new Error(e.response.data);
   }
+});
+
+export const shopSlice = combineReducers({
+  shop: shoppingReducer,
 });
 
 export const { logout } = userSlice.actions;
