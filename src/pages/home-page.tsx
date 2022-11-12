@@ -1,17 +1,18 @@
-import * as React from 'react';
-import Header from '../components/modules/header/header';
-import Product from '../components/product/product';
-import { connect } from 'react-redux';
-export const HOME_PAGE_ROUTE = '/';
+import * as React from "react";
+import Header from "../components/modules/header/header";
+
+export const HOME_PAGE_ROUTE = "/";
 
 export function HomePage() {
   return (
     <>
-      <Product />
       <Header />
     </>
   );
 }
+<<<<<<< Updated upstream
+=======
+
 
 const mapStateToProps = (state: { shop: { Product: any } }) => {
   return {
@@ -20,3 +21,4 @@ const mapStateToProps = (state: { shop: { Product: any } }) => {
 };
 
 export default connect(mapStateToProps)(Product);
+>>>>>>> Stashed changes

@@ -14,6 +14,7 @@ const Product = ({}) => {
     width: 400,
   };
 
+  
   useEffect(() => {
     axios({
       method: 'GET',
