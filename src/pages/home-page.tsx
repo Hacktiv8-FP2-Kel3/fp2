@@ -10,3 +10,15 @@ export function HomePage() {
     </>
   );
 }
+<<<<<<< Updated upstream
+=======
+
+
+const mapStateToProps = (state: { shop: { Product: any } }) => {
+  return {
+    Product: state.shop.Product,
+  };
+};
+
+export default connect(mapStateToProps)(Product);
+>>>>>>> Stashed changes
