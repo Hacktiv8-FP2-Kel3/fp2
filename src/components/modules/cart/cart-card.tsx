@@ -35,7 +35,7 @@ export default function CartCard(props: Props) {
 
   const onHandleClickSubtract = React.useCallback(() => {
     if (cart.quantity - 1 === 0) {
-      dispatch(removeCarts(data));
+      dispatch(removeCarts(cart));
     } else {
       dispatch(
         adjQtyCarts({
@@ -44,7 +44,7 @@ export default function CartCard(props: Props) {
         })
       );
     }
-  }, [cart.quantity, data, dispatch]);
+  }, [cart, data, dispatch]);
 
   return (
     <tr>

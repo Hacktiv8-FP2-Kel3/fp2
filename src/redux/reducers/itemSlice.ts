@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Item } from "../../api-hooks/item/item.model";
+import { Cart, Item } from "../../api-hooks/item/item.model";
 
 export interface ItemState {
   isLoading: boolean;
@@ -19,6 +19,30 @@ const itemSlice = createSlice({
       state.isLoading = initialState.isLoading;
       const data = action.payload as Item[];
       state.items = data;
+    },
+    substractItems: (state, action) => {
+      const carts = action.payload as Cart[];
+      carts.forEach((cart) => {
+        const findArrayIndex = state.items.findIndex(
+          (item) => cart.id === item.id
+        );
+        if (findArrayIndex > -1) {
+          state.items[findArrayIndex].stock -= cart.quantity;
+        }
+      });
+      localStorage.setItem("items", JSON.stringify(state.items));
+    },
+    addItems: (state, action) => {
+      const datas = action.payload as Item[];
+      datas.forEach((data) => {
+        const findArrayIndex = state.items.findIndex(
+          (item) => data.id === item.id
+        );
+        if (findArrayIndex > -1) {
+          state.items[findArrayIndex].stock += data.stock;
+        }
+      });
+      localStorage.setItem("items", JSON.stringify(state.items));
     },
   },
   extraReducers: (builder) => {
@@ -65,6 +89,6 @@ export const getProducts = createAsyncThunk("products", async () => {
   }
 });
 
-export const { setItems } = itemSlice.actions;
+export const { setItems, addItems, substractItems } = itemSlice.actions;
 
 export default itemSlice.reducer;

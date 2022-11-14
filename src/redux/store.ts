@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import logger from "redux-logger";
 import cartReducer, { CartState } from "./reducers/cartSlice";
 import itemReducer, { ItemState } from "./reducers/itemSlice";
+import saleReducer, { SaleState } from "./reducers/salesSlice";
 import userReducer, { UserState } from "./reducers/userSlice";
 
 export interface ListReducers {
   user: UserState;
   item: ItemState;
   cart: CartState;
+  sale: SaleState;
 }
 
 export const store = configureStore({
@@ -16,6 +18,7 @@ export const store = configureStore({
     user: userReducer,
     item: itemReducer,
     cart: cartReducer,
+    sale: saleReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

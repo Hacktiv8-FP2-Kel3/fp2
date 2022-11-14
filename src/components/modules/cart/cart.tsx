@@ -6,10 +6,17 @@ import Text from "../../elements/text";
 import EmptyView from "../../../assets/empty-view.jpeg";
 import CartCard from "./cart-card";
 import Button from "../../elements/button";
+import { useAppDispatch } from "../../../redux/store";
+import salesSlice, { adjustSoldItem } from "../../../redux/reducers/salesSlice";
+import { removeAllCarts, removeCarts } from "../../../redux/reducers/cartSlice";
+import { useNavigate } from "react-router-dom";
+import { substractItems } from "../../../redux/reducers/itemSlice";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const { carts } = useGetCarts();
   const { items } = useGetItems();
+  const navigate = useNavigate();
   const totalPrice = carts.reduce((prev, cur) => {
     return prev + cur.price * cur.quantity;
   }, 0);
@@ -21,6 +28,15 @@ export default function Cart() {
       isNotValid = true;
     }
   });
+
+  const dispatch = useAppDispatch();
+  const onHandleClickCheckout = React.useCallback(() => {
+    dispatch(adjustSoldItem(carts));
+    dispatch(substractItems(carts));
+    dispatch(removeAllCarts());
+    toast.success("Berhasil melakukan pembelian");
+    navigate("/");
+  }, [carts, dispatch, navigate]);
 
   return (
     <div className={styles.flexOne()} style={{ flexDirection: "column" }}>
@@ -48,6 +64,7 @@ export default function Cart() {
             <Button
               className={styles.buttonContainer()}
               disabled={isNotValid}
+              onClick={onHandleClickCheckout}
             >{`Checkout`}</Button>
           </div>
         </>

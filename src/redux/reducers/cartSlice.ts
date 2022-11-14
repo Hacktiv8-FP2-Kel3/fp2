@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import { Cart, Item } from "../../api-hooks/item/item.model";
 
 export interface CartState {
@@ -32,8 +31,12 @@ const cartSlice = createSlice({
       localStorage.setItem("carts", JSON.stringify(state.carts));
     },
     removeCarts: (state, action) => {
-      const data = action.payload;
+      const data = action.payload as Cart;
       state.carts = state.carts.filter((cart) => cart.id !== data.id);
+      localStorage.setItem("carts", JSON.stringify(state.carts));
+    },
+    removeAllCarts: (state) => {
+      state.carts = initialState.carts;
       localStorage.setItem("carts", JSON.stringify(state.carts));
     },
     adjQtyCarts: (state, action) => {
@@ -54,7 +57,7 @@ const cartSlice = createSlice({
   extraReducers: {},
 });
 
-export const { setCarts, addCarts, removeCarts, adjQtyCarts } =
+export const { setCarts, addCarts, removeCarts, adjQtyCarts, removeAllCarts } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
