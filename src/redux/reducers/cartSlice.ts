@@ -29,14 +29,12 @@ const cartSlice = createSlice({
           quantity: 1,
         });
       }
-      toast.success("Add to cart successfull");
       localStorage.setItem("carts", JSON.stringify(state.carts));
     },
     removeCarts: (state, action) => {
       const data = action.payload;
-      state.carts.filter((item) => item.id === data.id);
+      state.carts = state.carts.filter((cart) => cart.id !== data.id);
       localStorage.setItem("carts", JSON.stringify(state.carts));
-      toast.success("Remove to cart successfull");
     },
     adjQtyCarts: (state, action) => {
       const data = action.payload;
@@ -51,7 +49,6 @@ const cartSlice = createSlice({
         });
       }
       localStorage.setItem("carts", JSON.stringify(state.carts));
-      toast.success("Add to card successfull");
     },
   },
   extraReducers: {},

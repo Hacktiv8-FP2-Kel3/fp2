@@ -6,14 +6,15 @@ interface Props {
   max?: number;
   setNumber: React.Dispatch<SetStateAction<number>>;
   number: number;
+  min?: number;
 }
 
 export default function NumberInput(props: Props) {
-  const { setNumber, max, number } = props;
+  const { setNumber, max, number, min = 0 } = props;
   return (
     <input
       type="number"
-      min={0}
+      min={min}
       max={max}
       value={number}
       onChange={(e) => {

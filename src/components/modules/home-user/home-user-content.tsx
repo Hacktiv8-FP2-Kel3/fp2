@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import * as React from "react";
-import useGetItems from "../../../api-hooks/item/item.query";
+import useGetItems, { useGetCarts } from "../../../api-hooks/item/item.query";
 import { css } from "../../../styles/style";
 import Text from "../../elements/text";
 import { CardProduct } from "../product/card-product";
 interface Props {}
 
 export default function HomeUserContent(props: Props) {
-  const { items, isLoading } = useGetItems();
+  const { items } = useGetItems();
 
   return (
     <div className={styles.flexOne()} style={{ flexDirection: "column" }}>

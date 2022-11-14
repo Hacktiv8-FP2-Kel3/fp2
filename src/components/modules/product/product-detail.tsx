@@ -10,6 +10,7 @@ import NumberInput from "../../elements/number-input";
 import { useSelector } from "react-redux";
 import { ListReducers, useAppDispatch } from "../../../redux/store";
 import { adjQtyCarts } from "../../../redux/reducers/cartSlice";
+import { toast } from "react-toastify";
 
 interface Props {
   item: Item;
@@ -33,6 +34,7 @@ export default function ProductDetail(props: Props) {
         })
       );
       setNumber(0);
+      toast.success("Add to cart successfull");
     }
   }, [auth?.token, dispatch, item, navigate, number]);
 

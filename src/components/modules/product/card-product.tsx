@@ -1,4 +1,4 @@
-import { Item } from "../../../api-hooks/item/item.model";
+import { Cart, Item } from "../../../api-hooks/item/item.model";
 import * as React from "react";
 import { css } from "../../../styles/style";
 import Text from "../../elements/text";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../api-hooks/user/use-auth";
 import { useAppDispatch } from "../../../redux/store";
 import { addCarts } from "../../../redux/reducers/cartSlice";
+import { toast } from "react-toastify";
 
 interface Props {
   item: Item;
@@ -22,6 +23,7 @@ export function CardProduct(props: Props) {
       navigate("/login");
     } else {
       dispatch(addCarts(item));
+      toast.success("Add to cart successfull");
     }
   }, [auth?.token, dispatch, item, navigate]);
   const onHandleClickDetail = React.useCallback(() => {
