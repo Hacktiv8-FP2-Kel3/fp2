@@ -1,17 +1,7 @@
-<<<<<<< Updated upstream
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
-=======
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 
-import { combineReducers } from 'redux';
-import shoppingReducer from '../shopping/shopping-reducer';
-
-
->>>>>>> Stashed changes
 export interface UserState {
   isLoginPending: boolean;
 }

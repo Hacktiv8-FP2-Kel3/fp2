@@ -6,9 +6,7 @@ interface Props {
 }
 
 const Text = React.forwardRef((props: Props, forwardedRef) => {
-  return (
-    <span {...(props as any)} ref={forwardedRef} sty />
-  ) as unknown as any;
+  return (<div {...(props as any)} ref={forwardedRef} sty />) as unknown as any;
 });
 
 export default Text;
