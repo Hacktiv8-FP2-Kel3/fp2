@@ -27,7 +27,7 @@ export default function SalesContent(props: Props) {
         <th className={styles.tdStyle()}>Price</th>
         <th className={styles.tdStyle()}>Sold Quantity</th>
         <th className={styles.tdStyle()}>Total Price</th>
-        {sales.map((sale) => (
+        {sales?.map((sale) => (
           <SalesCard key={sale.id} sale={sale} />
         ))}
       </table>
