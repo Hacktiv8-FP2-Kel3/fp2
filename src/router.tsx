@@ -11,6 +11,7 @@ import { CartPage, CART_PAGE_ROUTE } from "./pages/cart-page";
 import { HomePage, HOME_PAGE_ROUTE } from "./pages/home-page";
 import LoginPage, { LOGIN_PAGE_ROUTE } from "./pages/login-page";
 import ProductPage, { PRODUCT_PAGE_ROUTE } from "./pages/product-page";
+import SalesPage, { SALES_PAGE_ROUTE } from "./pages/sales-page";
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   let { auth } = useAuth();
@@ -27,6 +28,7 @@ export default function Router() {
         <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />
         <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
         <Route path={PRODUCT_PAGE_ROUTE} element={<ProductPage />} />
+        <Route path={SALES_PAGE_ROUTE} element={<SalesPage />} />
         <Route
           path={CART_PAGE_ROUTE}
           element={

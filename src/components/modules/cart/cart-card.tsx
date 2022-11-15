@@ -61,14 +61,14 @@ export default function CartCard(props: Props) {
             justifyContent: "center",
           }}
         >
-          <Button buttonType={"danger"} onClick={onHandleClickAdd}>
-            +
+          <Button buttonType={"danger"} onClick={onHandleClickSubtract}>
+            -
           </Button>
           <div className={styles.textPadding()}>
             <Text>{cart.quantity}</Text>
           </div>
-          <Button buttonType={"danger"} onClick={onHandleClickSubtract}>
-            -
+          <Button buttonType={"danger"} onClick={onHandleClickAdd}>
+            +
           </Button>
           {data?.stock! < cart.quantity && (
             <div className={styles.errorMessage()}>

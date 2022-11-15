@@ -7,7 +7,7 @@ import EmptyView from "../../../assets/empty-view.jpeg";
 import CartCard from "./cart-card";
 import Button from "../../elements/button";
 import { useAppDispatch } from "../../../redux/store";
-import salesSlice, { adjustSoldItem } from "../../../redux/reducers/salesSlice";
+import salesSlice, { adjustSales } from "../../../redux/reducers/salesSlice";
 import { removeAllCarts, removeCarts } from "../../../redux/reducers/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { substractItems } from "../../../redux/reducers/itemSlice";
@@ -31,7 +31,7 @@ export default function Cart() {
 
   const dispatch = useAppDispatch();
   const onHandleClickCheckout = React.useCallback(() => {
-    dispatch(adjustSoldItem(carts));
+    dispatch(adjustSales(carts));
     dispatch(substractItems(carts));
     dispatch(removeAllCarts());
     toast.success("Berhasil melakukan pembelian");

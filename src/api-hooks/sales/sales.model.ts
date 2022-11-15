@@ -1,4 +1,4 @@
-export interface SoldItem {
+export interface Sales {
   id: number;
   title: string;
   price: number;

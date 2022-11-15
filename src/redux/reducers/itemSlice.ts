@@ -44,6 +44,16 @@ const itemSlice = createSlice({
       });
       localStorage.setItem("items", JSON.stringify(state.items));
     },
+    adjustItemStock: (state, action) => {
+      const data = action.payload as Item;
+      const findArrayIndex = state.items.findIndex(
+        (item) => data.id === item.id
+      );
+      if (findArrayIndex > -1) {
+        state.items[findArrayIndex].stock = data.stock;
+      }
+      localStorage.setItem("items", JSON.stringify(state.items));
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getProducts.pending, (state) => {
@@ -89,6 +99,7 @@ export const getProducts = createAsyncThunk("products", async () => {
   }
 });
 
-export const { setItems, addItems, substractItems } = itemSlice.actions;
+export const { setItems, addItems, substractItems, adjustItemStock } =
+  itemSlice.actions;
 
 export default itemSlice.reducer;

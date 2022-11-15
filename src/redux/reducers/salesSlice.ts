@@ -1,44 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Cart, Item } from "../../api-hooks/item/item.model";
-import { SoldItem } from "../../api-hooks/sold-item/sold-item.model";
+import { Cart } from "../../api-hooks/item/item.model";
+import { Sales } from "../../api-hooks/sales/sales.model";
 
 export interface SaleState {
-  soldItem: SoldItem[];
+  sales: Sales[];
 }
 const initialState: SaleState = {
-  soldItem: [],
+  sales: [],
 };
 
 const cartSlice = createSlice({
-  name: "soldItem",
+  name: "sales",
   initialState,
   reducers: {
-    setSoldItem: (state, action) => {
+    setSales: (state, action) => {
       const data = action.payload;
-      state.soldItem = data;
+      state.sales = data;
     },
-    adjustSoldItem: (state, action) => {
+    adjustSales: (state, action) => {
       const items = action.payload as Cart[];
       items.forEach((item) => {
-        const findArrayIndex = state.soldItem.findIndex(
+        const findArrayIndex = state.sales.findIndex(
           (sold) => sold.id === item.id
         );
         const { quantity, ...rest } = item;
         if (findArrayIndex > -1) {
-          state.soldItem[findArrayIndex].soldQuantity += quantity;
+          state.sales[findArrayIndex].soldQuantity += quantity;
         } else {
-          state.soldItem.push({
+          state.sales.push({
             ...rest,
             soldQuantity: quantity,
           });
         }
       });
-      localStorage.setItem("soldItem", JSON.stringify(state.soldItem));
+      localStorage.setItem("sales", JSON.stringify(state.sales));
     },
   },
   extraReducers: {},
 });
 
-export const { setSoldItem, adjustSoldItem } = cartSlice.actions;
+export const { setSales, adjustSales } = cartSlice.actions;
 
 export default cartSlice.reducer;

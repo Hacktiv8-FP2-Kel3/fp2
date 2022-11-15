@@ -4,10 +4,11 @@ import useGetItems, { useGetCarts } from "../../../api-hooks/item/item.query";
 import { css } from "../../../styles/style";
 import Text from "../../elements/text";
 import { CardProduct } from "../product/card-product";
+import Loader from "react-spinners/PulseLoader";
 interface Props {}
 
 export default function HomeUserContent(props: Props) {
-  const { items } = useGetItems();
+  const { items, isLoading } = useGetItems();
 
   return (
     <div className={styles.flexOne()} style={{ flexDirection: "column" }}>
@@ -16,17 +17,23 @@ export default function HomeUserContent(props: Props) {
       >
         <Text className={styles.titleText()}>Products</Text>
       </div>
-      <div className={classNames(styles.flexWrapOne())}>
-        {items.map((item, idx) => (
-          <div
-            key={item.id}
-            className={styles.cardSpace()}
-            style={{ paddingRight: idx % 4 !== 3 ? 20 : 0 }}
-          >
-            <CardProduct item={item} />
-          </div>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className={styles.loaderContainer()}>
+          <Loader size={20} color={"#03174C"} />
+        </div>
+      ) : (
+        <div className={classNames(styles.flexWrapOne())}>
+          {items.map((item, idx) => (
+            <div
+              key={item.id}
+              className={styles.cardSpace()}
+              style={{ paddingRight: idx % 4 !== 3 ? 20 : 0 }}
+            >
+              <CardProduct item={item} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -54,5 +61,11 @@ const styles = {
   cardSpace: css({
     width: "25%",
     marginBottom: 50,
+  }),
+  loaderContainer: css({
+    flex: 1,
+    marginTop: "30vh",
+    display: "flex",
+    justifyContent: "center",
   }),
 };
