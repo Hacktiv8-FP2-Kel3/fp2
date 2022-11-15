@@ -5,7 +5,7 @@ export const useUserGetHeaderList = () => {
   const headerAdmin = [
     {
       name: "Rekap Penjualan",
-      link: "/rekap",
+      link: "/sales",
     },
   ];
   const headerUser = [

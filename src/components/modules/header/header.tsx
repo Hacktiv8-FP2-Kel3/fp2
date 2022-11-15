@@ -35,7 +35,8 @@ export function Header() {
   }, [navigate]);
   const handleClickOnLogout = React.useCallback(() => {
     signOut();
-  }, [signOut]);
+    navigate('/');
+  }, [navigate, signOut]);
 
   return (
     <div className={styles.navContainer()}>

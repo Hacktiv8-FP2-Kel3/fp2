@@ -21,6 +21,16 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   }
   return children;
 }
+
+function RequireAdminAuth({ children }: { children: JSX.Element }) {
+  let { auth } = useAuth();
+  let location = useLocation();
+  console.log(!!auth?.isAdmin);
+  if (!!auth?.isAdmin) {
+    return children;
+  }
+  return <Navigate to={LOGIN_PAGE_ROUTE} state={{ from: location }} />;
+}
 export default function Router() {
   return (
     <BrowserRouter>
@@ -28,7 +38,14 @@ export default function Router() {
         <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />
         <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
         <Route path={PRODUCT_PAGE_ROUTE} element={<ProductPage />} />
-        <Route path={SALES_PAGE_ROUTE} element={<SalesPage />} />
+        <Route
+          path={SALES_PAGE_ROUTE}
+          element={
+            <RequireAdminAuth>
+              <SalesPage />
+            </RequireAdminAuth>
+          }
+        />
         <Route
           path={CART_PAGE_ROUTE}
           element={
