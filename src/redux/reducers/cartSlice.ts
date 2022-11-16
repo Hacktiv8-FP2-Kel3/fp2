@@ -76,11 +76,11 @@ const cartSlice = createSlice({
     adjQtyCarts: (state, action) => {
       const data = action.payload;
       const auth: Auth = JSON.parse(localStorage.getItem("auth")!);
-      const findUsernameIndex = state.carts.findIndex(
+      const findUsernameIndex = state.carts?.findIndex(
         (item) => item.username === auth.username
       );
       if (findUsernameIndex > -1) {
-        const findIndex = state.carts[findUsernameIndex].carts.findIndex(
+        const findIndex = state.carts[findUsernameIndex]?.carts?.findIndex(
           (item) => item.id === data.id
         );
         const { stock, ...rest } = data;
