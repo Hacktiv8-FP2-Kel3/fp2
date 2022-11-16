@@ -5,4 +5,5 @@ export interface User {
 export interface Auth {
   token: string;
   isAdmin: boolean;
+  username: string;
 }

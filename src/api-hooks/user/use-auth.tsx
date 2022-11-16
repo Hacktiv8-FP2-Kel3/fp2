@@ -31,11 +31,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           JSON.stringify({
             token: token,
             isAdmin: true,
+            username: username,
           })
         );
         setAuth({
           token: token,
           isAdmin: true,
+          username: username,
         });
         toast.success("Login Berhasil");
       } else {
@@ -45,11 +47,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           JSON.stringify({
             token: res.token,
             isAdmin: false,
+            username: username,
           })
         );
         setAuth({
           token: res.token,
           isAdmin: false,
+          username,
         });
       }
     },

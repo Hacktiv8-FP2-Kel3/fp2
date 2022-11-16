@@ -39,7 +39,12 @@ export default function ProductDetail(props: Props) {
   }, [auth?.token, dispatch, item, navigate, number]);
 
   const { carts } = useSelector((state: ListReducers) => state.cart);
-  const data = carts.find((cart) => cart.id === item.id);
+  const findUsernameIndex = carts.findIndex(
+    (item) => item.username === auth?.username
+  );
+  const data = carts[findUsernameIndex].carts.find(
+    (cart) => cart.id === item.id
+  );
 
   let stock = item.stock;
   if (data) {
@@ -62,6 +67,10 @@ export default function ProductDetail(props: Props) {
         <div
           className={styles.priceStyle()}
         >{`${item.rating.rate} (${item.rating.count})`}</div>
+        <div
+          className={styles.priceStyle()}
+          style={{ marginLeft: 20 }}
+        >{`Stok : ${item.stock}`}</div>
       </div>
 
       <div className={styles.buttonContainer()}>

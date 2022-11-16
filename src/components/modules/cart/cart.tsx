@@ -12,17 +12,20 @@ import { removeAllCarts } from "../../../redux/reducers/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { substractItems } from "../../../redux/reducers/itemSlice";
 import { toast } from "react-toastify";
+import { useAuth } from "../../../api-hooks/user/use-auth";
 
 export default function Cart() {
   const { carts } = useGetCarts();
   const { items } = useGetItems();
+  const { auth } = useAuth();
   const navigate = useNavigate();
-  const totalPrice = carts.reduce((prev, cur) => {
+  const userCarts = carts.find((item) => item.username === auth?.username);
+  const totalPrice = userCarts?.carts?.reduce((prev, cur) => {
     return prev + cur.price * cur.quantity;
   }, 0);
 
   let isNotValid = false;
-  carts.forEach((cart) => {
+  userCarts?.carts.forEach((cart) => {
     const item = items.find((item) => item.id === cart.id);
     if (item?.stock! < cart.quantity) {
       isNotValid = true;
@@ -31,12 +34,12 @@ export default function Cart() {
 
   const dispatch = useAppDispatch();
   const onHandleClickCheckout = React.useCallback(() => {
-    dispatch(adjustSales(carts));
-    dispatch(substractItems(carts));
+    dispatch(adjustSales(userCarts?.carts));
+    dispatch(substractItems(userCarts?.carts));
     dispatch(removeAllCarts());
     toast.success("Berhasil melakukan pembelian");
     navigate("/");
-  }, [carts, dispatch, navigate]);
+  }, [dispatch, navigate, userCarts?.carts]);
 
   return (
     <div className={styles.flexOne()} style={{ flexDirection: "column" }}>
@@ -45,7 +48,7 @@ export default function Cart() {
       >
         <Text className={styles.titleText()}>My Carts</Text>
       </div>
-      {carts?.length > 0 ? (
+      {userCarts?.carts?.length! > 0 ? (
         <>
           <table className={styles.tableStyle()}>
             <th className={styles.tdStyle()}>Product Image</th>
@@ -53,14 +56,14 @@ export default function Cart() {
             <th className={styles.tdStyle()}>Price</th>
             <th className={styles.tdStyle()}>Quantity</th>
             <th className={styles.tdStyle()}>Total Price</th>
-            {carts.map((cart) => (
+            {userCarts?.carts?.map((cart) => (
               <CartCard key={cart.id} cart={cart} items={items} />
             ))}
           </table>
           <div className={styles.totalContainer()}>
-            <Text className={styles.titleText()}>{`Total $ ${totalPrice.toFixed(
-              2
-            )}`}</Text>
+            <Text
+              className={styles.titleText()}
+            >{`Total $ ${totalPrice?.toFixed(2)}`}</Text>
             <Button
               className={styles.buttonContainer()}
               disabled={isNotValid}
