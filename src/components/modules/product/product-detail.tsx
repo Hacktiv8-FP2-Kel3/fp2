@@ -42,7 +42,7 @@ export default function ProductDetail(props: Props) {
   const findUsernameIndex = carts.findIndex(
     (item) => item.username === auth?.username
   );
-  const data = carts[findUsernameIndex].carts.find(
+  const data = carts[findUsernameIndex]?.carts?.find(
     (cart) => cart.id === item.id
   );
 
