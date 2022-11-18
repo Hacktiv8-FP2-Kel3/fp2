@@ -24,13 +24,16 @@ export default function HomeUserContent(props: Props) {
       ) : (
         <div className={classNames(styles.flexWrapOne())}>
           {items.map((item, idx) => (
-            <div
-              key={item.id}
-              className={styles.cardSpace()}
-              style={{ paddingRight: idx % 4 !== 3 ? 20 : 0 }}
-            >
-              <CardProduct item={item} />
-            </div>
+            <React.Fragment key={item.id}>
+              {item.stock > 0 && (
+                <div
+                  className={styles.cardSpace()}
+                  style={{ paddingRight: idx % 4 !== 3 ? 20 : 0 }}
+                >
+                  <CardProduct item={item} />
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       )}
