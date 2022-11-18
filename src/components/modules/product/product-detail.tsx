@@ -46,7 +46,7 @@ export default function ProductDetail(props: Props) {
     (cart) => cart.id === item.id
   );
 
-  let stock = item.stock;
+  let stock = item?.stock;
   if (data) {
     stock -= data.quantity;
   }
