@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useAuth } from "./api-hooks/user/use-auth";
 import Header from "./components/modules/header/header";
+import NotFoundPage from "./pages/404-page";
 import { CartPage, CART_PAGE_ROUTE } from "./pages/cart-page";
 import { HomePage, HOME_PAGE_ROUTE } from "./pages/home-page";
 import LoginPage, { LOGIN_PAGE_ROUTE } from "./pages/login-page";
@@ -31,10 +32,12 @@ function RequireAdminAuth({ children }: { children: JSX.Element }) {
   }
   return <Navigate to={LOGIN_PAGE_ROUTE} state={{ from: location }} />;
 }
+
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={"*"} element={<NotFoundPage />} />
         <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />
         <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
         <Route path={PRODUCT_PAGE_ROUTE} element={<ProductPage />} />
